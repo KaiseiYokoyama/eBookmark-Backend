@@ -28,9 +28,6 @@ fn write_data_or_err_template(data: &EBookmarkData) -> Result<(), Custom<Templat
 
 pub mod register {
     use super::*;
-    use rocket_contrib::templates::Template;
-
-    // todo mount them
 
     /// 本を登録する
     #[post("/", data = "<string>")]
@@ -45,6 +42,10 @@ pub mod register {
 
         Ok(Status::Ok)
     }
+}
+
+pub mod delete {
+    use super::*;
 
     /// 本を削除する
     #[post("/", data = "<string>")]
@@ -63,6 +64,10 @@ pub mod register {
 
         Ok(Status::Ok)
     }
+}
+
+pub mod search {
+    use super::*;
 
     #[post("/", data = "<string>")]
     pub fn search(string: String) -> Result<String, Custom<Template>> {
