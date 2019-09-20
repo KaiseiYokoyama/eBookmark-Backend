@@ -24,6 +24,42 @@ impl EBookmarkData {
         let index = index?;
         Some(self.books.remove(index))
     }
+
+    pub fn search<'a>(&'a self, search: &request::Search) -> Vec<&'a Book> {
+        let iter = self.books.iter().clone();
+
+        let mut vec = iter
+            // 絞り込み
+            .filter(|b| {
+                // タグの条件
+                (
+                    if let Some(tags) = &search.tags {
+                        // 条件にあるタグを全て含む
+                        tags.iter().all(|t| b.tags.contains(t))
+                    } else {
+                        // 条件なし
+                        true
+                    }
+                ) && (
+                    if let Some(bookmark) = search.is_bookmark.clone() {
+                        bookmark == b.is_bookmark
+                    } else {
+                        // 条件なし
+                        true
+                    }
+                )
+            }).collect::<Vec<&Book>>();
+
+        // ソート
+        if let Some(title) = &search.title {
+            vec.sort_by(|a, b| {
+                levenshtein::levenshtein(title, &a.title).cmp(&levenshtein::levenshtein(title, &b.title))
+            });
+            vec.reverse();
+        }
+
+        vec
+    }
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
