@@ -12,3 +12,13 @@ pub struct Delete {
     /// 削除対象の本に対応したNFCのID
     pub id: String,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Search {
+    /// 探したい本のタイトル
+    pub title: Option<String>,
+    /// 探したい本についているtag
+    pub tags: Option<Vec<String>>,
+    /// ブックマークか否か
+    pub is_bookmark: Option<bool>,
+}
