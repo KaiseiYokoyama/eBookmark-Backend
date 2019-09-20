@@ -1,5 +1,5 @@
 mod ebookmark;
-mod request;
+pub mod request;
 
 pub use ebookmark::*;
-pub use request::*;
+pub use request;

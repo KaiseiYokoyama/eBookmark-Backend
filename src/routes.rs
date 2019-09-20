@@ -15,7 +15,7 @@ pub mod register {
             // todo 500 Internal Server Error
         })?;
 
-        let register: Register = serde_json::from_str(&string).map_err(|e| {
+        let register: request::Register = serde_json::from_str(&string).map_err(|e| {
             unimplemented!()
             // todo 500 Internal Server Error
         })?;
