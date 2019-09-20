@@ -30,6 +30,8 @@ pub mod register {
     use super::*;
     use rocket_contrib::templates::Template;
 
+    // todo mount them
+
     /// 本を登録する
     #[post("/", data = "<string>")]
     pub fn register(string: String) -> Result<Status, Custom<Template>> {
