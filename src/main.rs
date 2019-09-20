@@ -28,6 +28,7 @@ fn launch() {
         .mount("/register", routes![routes::register::register])
         .mount("/delete", routes![routes::delete::delete])
         .mount("/search", routes![routes::search::search])
+        .mount("/get", routes![routes::get::all])
         .attach(rocket_contrib::templates::Template::fairing())
         .launch();
 }

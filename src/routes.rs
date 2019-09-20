@@ -92,7 +92,7 @@ pub mod get {
         use super::*;
 
         /// 登録されている本をすべて取得する
-        #[get("/")]
+        #[get("/all")]
         pub fn get_all() -> Result<String, Custom<Template>> {
             let data = read_data().map_err(|e| {
                 unimplemented!()
