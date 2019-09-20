@@ -6,3 +6,9 @@ pub struct Register {
     /// 本のタイトル
     title: String,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Delete {
+    /// 削除対象の本に対応したNFCのID
+    id: String,
+}
