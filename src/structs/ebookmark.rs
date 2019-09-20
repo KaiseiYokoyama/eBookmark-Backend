@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-#[derive(Serialize, Deserialize, Default)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(default)]
 pub struct EBookmarkData {
     books: Vec<Book>,
@@ -12,7 +12,7 @@ impl EBookmarkData {
     }
 }
 
-#[derive(Serialize, Deserialize, Default)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(default)]
 pub struct Book {
     /// 本のタイトル
@@ -26,4 +26,18 @@ pub struct Book {
     /// メモ
     memo: String,
     // todo 読書記録に対応
+}
+
+impl From<Register> for Book {
+    fn from(reg: Register) -> Self {
+        let Register {
+            title, id
+        } = reg;
+
+        Book {
+            title,
+            id,
+            ..Book::default()
+        }
+    }
 }
