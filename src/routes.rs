@@ -84,3 +84,25 @@ pub mod search {
         Ok(string)
     }
 }
+
+pub mod get {
+    use super::*;
+
+    pub mod all {
+        use super::*;
+
+        /// 登録されている本をすべて取得する
+        #[get("/all")]
+        pub fn get_all() -> Result<String, Custom<Template>> {
+            let data = read_data().map_err(|e| {
+                unimplemented!()
+                // todo 500 Internal Server Error
+            })?;
+
+            serde_json::to_string(&data.books).map_err(|e| {
+                unimplemented!()
+                // todo 500 Internal Server Error
+            })
+        }
+    }
+}
