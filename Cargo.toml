@@ -12,3 +12,5 @@ rocket_contrib = { version="0.4", features = ["tera_templates"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.0"
 failure = "0.1"
+# 編集距離
+levenshtein = "1.0.4"
