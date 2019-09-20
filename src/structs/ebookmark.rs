@@ -3,7 +3,7 @@ use crate::prelude::*;
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(default)]
 pub struct EBookmarkData {
-    books: Vec<Book>,
+    pub books: Vec<Book>,
 }
 
 impl EBookmarkData {
@@ -59,6 +59,19 @@ impl EBookmarkData {
         }
 
         vec
+    }
+
+    pub fn get_by_id<'a>(&'a self, id: &str) -> Option<&'a Book> {
+        let mut book_res = None;
+        // 該当するidを持つbookを探す
+        for book in self.books.iter() {
+            if book.id == id {
+                book_res = Some(book);
+                break;
+            }
+        }
+
+        book_res
     }
 }
 

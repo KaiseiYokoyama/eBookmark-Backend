@@ -84,3 +84,50 @@ pub mod search {
         Ok(string)
     }
 }
+
+pub mod get {
+    use super::*;
+
+    pub mod one {
+        use super::*;
+
+        /// idに対応する本を取得する
+        #[post("/one", data="<string>")]
+        pub fn get_one(string: String) -> Result<Option<String>, Custom<Template>> {
+            let (data, get_one): (EBookmarkData, request::GetOne) = communication(&string)?;
+
+            let book = data.get_by_id(&get_one.id);
+
+            if let Some(book) = book {
+                match serde_json::to_string(book).map_err(|e| {
+                    unimplemented!()
+                    // todo 500 Internal Server Error
+                }) {
+                    Ok(s) => Ok(Some(s)),
+                    Err(e) => Err(e),
+                }
+            } else {
+                // 該当なし
+                Ok(None)
+            }
+        }
+    }
+
+    pub mod all {
+        use super::*;
+
+        /// 登録されている本をすべて取得する
+        #[get("/all")]
+        pub fn get_all() -> Result<String, Custom<Template>> {
+            let data = read_data().map_err(|e| {
+                unimplemented!()
+                // todo 500 Internal Server Error
+            })?;
+
+            serde_json::to_string(&data.books).map_err(|e| {
+                unimplemented!()
+                // todo 500 Internal Server Error
+            })
+        }
+    }
+}
