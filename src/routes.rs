@@ -76,7 +76,7 @@ pub mod search {
         // 検索
         let results = data.search(&search);
 
-        let string = serde_json::to_string(&results).map_err(|e|{
+        let string = serde_json::to_string(&results).map_err(|e| {
             unimplemented!()
             // todo 500 Internal Server Error
         })?;
@@ -92,7 +92,7 @@ pub mod get {
         use super::*;
 
         /// idに対応する本を取得する
-        #[post("/one", data="<string>")]
+        #[post("/one", data = "<string>")]
         pub fn get_one(string: String) -> Result<Option<String>, Custom<Template>> {
             let (data, get_one): (EBookmarkData, request::GetOne) = communication(&string)?;
 
@@ -129,5 +129,19 @@ pub mod get {
                 // todo 500 Internal Server Error
             })
         }
+    }
+}
+
+pub mod books {
+    use super::*;
+
+    #[get("/<id>")]
+    pub fn book(id: String) -> Option<Template> {
+        let data = read_data().ok()?;
+
+        let book = data.get_by_id(&id)?;
+
+        // todo bookのデータとTemplateを用いたページの配信
+        unimplemented!()
     }
 }

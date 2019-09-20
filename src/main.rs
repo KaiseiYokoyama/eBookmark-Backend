@@ -29,6 +29,7 @@ fn launch() {
         .mount("/delete", routes![routes::delete::delete])
         .mount("/search", routes![routes::search::search])
         .mount("/get", routes![routes::get::one::get_one, routes::get::all::get_all])
+        .mount("/books", routes![routes::books::book])
         .attach(rocket_contrib::templates::Template::fairing())
         .launch();
 }
