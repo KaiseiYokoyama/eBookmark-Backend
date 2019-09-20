@@ -3,7 +3,7 @@ use crate::prelude::*;
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(default)]
 pub struct EBookmarkData {
-    books: Vec<Book>,
+    pub books: Vec<Book>,
 }
 
 impl EBookmarkData {
