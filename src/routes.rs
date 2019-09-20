@@ -30,6 +30,8 @@ pub mod register {
     use super::*;
     use rocket_contrib::templates::Template;
 
+    // todo mount them
+
     /// 本を登録する
     #[post("/", data = "<string>")]
     pub fn register(string: String) -> Result<Status, Custom<Template>> {
@@ -51,7 +53,8 @@ pub mod register {
 
         let request::Delete { id, .. } = register;
 
-        let removed = data.remove(&id).ok_or({
+        // 削除
+        let _removed = data.remove(&id).ok_or({
             unimplemented!()
             // todo 500 Internal Server Error
         })?;
@@ -59,5 +62,20 @@ pub mod register {
         write_data_or_err_template(&data)?;
 
         Ok(Status::Ok)
+    }
+
+    #[post("/", data = "<string>")]
+    pub fn search(string: String) -> Result<String, Custom<Template>> {
+        let (data, search): (EBookmarkData, request::Search) = communication(&string)?;
+
+        // 検索
+        let results = data.search(&search);
+
+        let string = serde_json::to_string(&results).map_err(|e|{
+            unimplemented!()
+            // todo 500 Internal Server Error
+        })?;
+
+        Ok(string)
     }
 }
