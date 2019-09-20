@@ -10,6 +10,20 @@ impl EBookmarkData {
     pub fn push(&mut self, book: Book) {
         self.books.push(book);
     }
+
+    pub fn remove(&mut self, id: &str) -> Option<Book> {
+        let mut index = None;
+        // 該当するidを持つbookを探す
+        for (idx, book) in self.books.iter().enumerate() {
+            if book.id == id {
+                index = Some(idx);
+                break;
+            }
+        }
+
+        let index = index?;
+        Some(self.books.remove(index))
+    }
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -28,9 +42,9 @@ pub struct Book {
     // todo 読書記録に対応
 }
 
-impl From<Register> for Book {
-    fn from(reg: Register) -> Self {
-        let Register {
+impl From<request::Register> for Book {
+    fn from(reg: request::Register) -> Self {
+        let request::Register {
             title, id
         } = reg;
 
