@@ -22,3 +22,9 @@ pub struct Search {
     /// ブックマークか否か
     pub is_bookmark: Option<bool>,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct GetOne {
+    /// 検索対象の本に対応したNFCのID
+    pub id: String,
+}
